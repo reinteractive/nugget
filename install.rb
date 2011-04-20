@@ -7,7 +7,13 @@ end
 
 puts "\n\nPlease enter the name of your gem:"
 gem_name = gets.chomp
-module_name = camelize(gem_name)
+
+if gem_name !~ /^\s*$/
+  module_name = camelize(gem_name)
+else
+  puts "I need a gem name that is not blank... c'mon..."
+  exit(1)
+end
 
 puts "\nPlease enter your name:"
 author_name = gets.chomp
@@ -22,14 +28,26 @@ puts "\nPlease enter the git write URL for your gem:"
 giturl = gets.chomp
 
 giturl =~ /^git@github.com:(\w+\/\w+).git$/
-git_path = $1
+if $1
+  git_path = $1
+else
+  puts "Does not look like a git read and write URL, sorry."
+  exit(1)
+end
 
 puts "\n\nThank you, building the gem structure now\n"
+
+##############################################################
+## Directory Structure
+puts "Making directory structure..."
 
 File.makedirs("#{gem_name}/lib/#{gem_name}")
 File.makedirs("#{gem_name}/spec")
 File.makedirs("#{gem_name}/spec/#{gem_name}")
 
+##############################################################
+## Library Files
+puts "Making top level library files..."
 
 File.open("#{gem_name}/lib/#{gem_name}.rb", 'w') do |f|
   file_contents=<<ENDFILE
@@ -42,16 +60,6 @@ ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/lib/VERSION", 'w') do |f|
-  file_contents=<<ENDFILE
-major:0
-minor:0
-patch:0
-build:
-ENDFILE
-  f.write(file_contents)
-end
-
 File.open("#{gem_name}/lib/#{gem_name}/base.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
@@ -60,6 +68,20 @@ module #{module_name}
     # Put your code here
   end
 end
+ENDFILE
+  f.write(file_contents)
+end
+
+##############################################################
+## Version Files
+puts "Making version files..."
+
+File.open("#{gem_name}/lib/VERSION", 'w') do |f|
+  file_contents=<<ENDFILE
+major:0
+minor:0
+patch:0
+build:
 ENDFILE
   f.write(file_contents)
 end
@@ -94,6 +116,11 @@ ENDFILE
   f.write(file_contents)
 end
 
+
+##############################################################
+## Gemspec File
+puts "Making #{gem_name}gemspec..."
+
 File.open("#{gem_name}/#{gem_name}.gemspec", 'w') do |f|
   file_contents=<<ENDFILE
 require File.dirname(__FILE__) + "/lib/#{gem_name}/version"
@@ -121,6 +148,10 @@ end
 ENDFILE
   f.write(file_contents)
 end
+
+##############################################################
+## RakeFile
+puts "Making Rakefile..."
 
 File.open("#{gem_name}/Rakefile", 'w') do |f|
   file_contents=<<ENDFILE
@@ -164,6 +195,9 @@ ENDFILE
   f.write(file_contents)
 end
 
+##############################################################
+## Gemfile
+puts "Making Gemfile..."
 File.open("#{gem_name}/Gemfile", 'w') do |f|
   file_contents=<<ENDFILE
 source :rubygems
@@ -191,7 +225,9 @@ ENDFILE
   f.write(file_contents)
 end
 
-
+##############################################################
+## Spec Folder
+puts "Making Specs..."
 File.open("#{gem_name}/spec/environment.rb", 'w') do |f|
   file_contents=<<ENDFILE
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
@@ -226,5 +262,17 @@ ENDFILE
 end
 
 
+##############################################################
+## Adding Git Remote
+puts "Adding your git repository as origin..."
+gem_path = File.join(File.expand_path(__FILE__), gem_name)
+`cd #{gem_path} && git init`
+`cd #{gem_path} && git remote add origin #{giturl}`
+
+##############################################################
+## Adding Git Remote
+puts "Adding your git repository as origin..."
 puts "\n\nCreation of gem #{gem_name} is complete"
-puts "\nPlease change into the directory and run bundle install, followed by rake to run your tests :)"
+puts "\nPlease change into your gem directory and run bundle install, followed by 'rake' to run your tests"
+
+puts "\nOnce done, edit your README file, add the contents to a commit, and push to github.\n\nEnjoy!\n"
