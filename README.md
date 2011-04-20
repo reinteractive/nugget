@@ -13,7 +13,7 @@ Where you go from there is up to you :)
 Usage
 ----------------
 
-    $ ruby < <(curl -s git://github.com/rubyx/nugget/raw/master/install.rb)
+    $ ruby -s <(curl -s https://github.com/rubyx/nugget/raw/master/install.rb)
 
 You will be asked for the following:
 

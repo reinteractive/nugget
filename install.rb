@@ -23,7 +23,7 @@ author_email = gets.chomp
 
 puts "The git write URL is the git location where you will be storing your gem,"
 puts "this needs read and write access, so be sure to enter the right one, for"
-puts "example, git@github.com:mikel/nugget.git"
+puts "example, git@github.com:rubyx/nugget.git"
 puts "\nPlease enter the git write URL for your gem:"
 giturl = gets.chomp
 
@@ -265,9 +265,9 @@ end
 ##############################################################
 ## Adding Git Remote
 puts "Adding your git repository as origin..."
-gem_path = File.join(File.expand_path(__FILE__), gem_name)
-`cd #{gem_path} && git init`
-`cd #{gem_path} && git remote add origin #{giturl}`
+gem_name = File.join(File.expand_path(__FILE__), gem_name)
+`cd #{gem_name} && git init`
+`cd #{gem_name} && git remote add origin #{giturl}`
 
 ##############################################################
 ## Adding Git Remote
