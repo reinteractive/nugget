@@ -54,19 +54,19 @@ First Steps
 Now that you have a gem directory, what should you do?  I recommend this:
 
 * Edit the README in your new gem and commit the changes, see
-(README Driven Development)[http://tom.preston-werner.com/2010/08/23/readme-driven-development.html] by
+[README Driven Development](http://tom.preston-werner.com/2010/08/23/readme-driven-development.html) by
 Tom Preston-Werner for more info.  Once done, do the following:
 
-    $ git add README.md
-    $ git commit README.md -m "First commit"
-    $ git push origin master
+      $ git add README.md
+      $ git commit README.md -m "First commit"
+      $ git push origin master
 
 * Modify the gemspec to update the description and summary info
 * Commit and push the rest of the code:
 
-    $ git add .
-    $ git commit -m "Basic gem structure from nugget"
-    $ git push
+      $ git add .
+      $ git commit -m "Basic gem structure from nugget"
+      $ git push
 
 Now you will have a basic library structure to start editing your gem with no external dependencies.
 
@@ -79,6 +79,7 @@ Write your specs and write your code.
 
 Once done, use the standard gem tools to deploy:
 
+    $ rake                # To run all your specs!
     $ vi lib/<yourgem>/version.rb   # Edit to suit
     $ git tag v0.0.1
     $ git push
