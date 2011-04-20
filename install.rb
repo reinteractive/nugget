@@ -49,6 +49,28 @@ File.makedirs("#{gem_name}/spec/#{gem_name}")
 ## Library Files
 puts "Making top level library files..."
 
+File.open("#{gem_name}/README.md", 'w') do |f|
+  file_contents=<<ENDFILE
+#{gem_name} readme
+=========================
+
+Decription
+--------------------------
+
+Usage
+--------------------------
+
+ENDFILE
+  f.write(file_contents)
+end
+
+File.open("#{gem_name}/CHANGELOG", 'w') do |f|
+  file_contents=<<ENDFILE
+
+ENDFILE
+  f.write(file_contents)
+end
+
 File.open("#{gem_name}/lib/#{gem_name}.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
@@ -269,9 +291,17 @@ puts "Adding your git repository as origin..."
 `cd #{gem_name} && git remote add origin #{giturl}`
 
 ##############################################################
-## Adding Git Remote
-puts "Adding your git repository as origin..."
+## Wrapping up
 puts "\n\nCreation of gem #{gem_name} is complete"
-puts "\nPlease change into your gem directory and run bundle install, followed by 'rake' to run your tests"
+puts "\nPlease change into your gem directory, edit the README.md and run:"
 
-puts "\nOnce done, edit your README file, add the contents to a commit, and push to github.\n\nEnjoy!\n"
+puts "$ git add README.md"
+puts '$ git commit README.md -m "First commit'
+puts '$ git push origin master'
+
+puts "\nThen to start testing:"
+
+puts '$ bundle install'
+puts '$ rake'
+
+puts "\nEnjoy!\n"
