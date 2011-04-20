@@ -2,8 +2,8 @@ Nugget
 ================
 
 Nugget is a minimal gem structure for all those peeps that want to
-get a kickstart on creating a gem without going to the hassle
-of using the gem authoring tools out there.
+get a kickstart on creating a gem without having a development or
+test dependency on external tools like hoe, jeweller or the like.
 
 "Out of the box", nugget will give you the basic directory structure
 for a gem file, with a gemspec and a spec suite to start testing.
@@ -13,28 +13,56 @@ Where you go from there is up to you :)
 Usage
 ----------------
 
-    $ bash < <(curl -s git://github.com/rubyx/nugget/raw/master/install.sh)
+    $ ruby < <(curl -s git://github.com/rubyx/nugget/raw/master/install.rb)
 
-You will be asked for the gem name of your gem which must be a valid ruby
-variable name, for example:
+You will be asked for the following:
+
+* Gem name
+* Your name
+* Your email
+* Git SSH read/write path for your gem
+
+The gem name of your gem must be a valid ruby variable name, for example:
 
     my_gem            # <= OK
     supergem          # <= OK
     Super Awesome Gem # <= not this, kittehs will die
 
-You will also need the read write SSH git repository URL of your gem, such as:
+The read write SSH git repository URL of your gem looks something like this:
 
     git@github.com:mikel/nugget.git
+
+Providing your name and your email allows us to populate your gemspec file correctly.
 
 Nugget will then build a basic gem folder structure using RSpec for you and setup
 everything you need to start writing failing specs.
 
+First Steps
+----------------
+
+Now that you have a gem directory, what should you do?  I recommend this:
+
+* Edit the README in your new gem and commit the changes, see
+(README Driven Development)[http://tom.preston-werner.com/2010/08/23/readme-driven-development.html] by
+Tom Preston-Werner for more info.  Once done, do the following:
+
+    $ git add README.md
+    $ git commit README.md -m "First commit"
+    $ git push origin master
+
+* Modify the gemspec to update the description and summary info
+* Commit and push the rest of the code:
+
+    $ git add .
+    $ git commit -m "Basic gem structure from nugget"
+    $ git push
+
+Now you will have a basic library structure to start editing your gem with no external dependencies.
+
 Writing a Gem
 ----------------
 
-First things first, fill in the README in your new gem and commit the changes, see
-(README Driven Development)[http://tom.preston-werner.com/2010/08/23/readme-driven-development.html] by
-Tom Preston-Werner for more info.  Once done, push your changes, congrats :)
+First things first,
 
 Write your specs and write your code.
 
