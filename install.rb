@@ -265,7 +265,6 @@ end
 ##############################################################
 ## Adding Git Remote
 puts "Adding your git repository as origin..."
-gem_name = File.join(File.expand_path(__FILE__), gem_name)
 `cd #{gem_name} && git init`
 `cd #{gem_name} && git remote add origin #{giturl}`
 
