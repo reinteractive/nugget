@@ -5,7 +5,7 @@ def camelize(lower_case_and_underscored_word)
   lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
 end
 
-write "\n\nPlease enter the name of your gem: "
+print "\n\nPlease enter the name of your gem: "
 gem_name = gets.chomp
 
 if gem_name !~ /^\s*$/
@@ -15,14 +15,14 @@ else
   exit(1)
 end
 
-write "\nAs well as your email: "
+print "\nAs well as your email: "
 author_email = gets.chomp
 unless author_email !~ /^\s*$/
   puts "Need the email for rubygem deploy, don't worry, I won't spam you (others might though)..."
   exit(1)
 end
 
-write "\And your name:          "
+print "\And your name:          "
 author_name = gets.chomp
 unless author_name !~ /^\s*$/
   puts "You aren't going to tell me who you are? Sorry to offend you! But I sorta need it for rubygems... "
