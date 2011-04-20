@@ -66,7 +66,9 @@ end
 
 File.open("#{gem_name}/CHANGELOG", 'w') do |f|
   file_contents=<<ENDFILE
+== #{Time.now.to_s} #{author_name} <#{author_email}>
 
+* Created #{gem_name}
 ENDFILE
   f.write(file_contents)
 end
@@ -162,7 +164,10 @@ Gem::Specification.new do |s|
 
   # s.add_dependency('other_gem', ">= version")
 
-  s.add_development_dependency "rspec"
+  s.add_development_dependency("rspec", ">= 2.5.1")
+  s.add_development_dependency("ZenTest", ">= 4.5.0")
+  s.add_development_dependency("rake", ">= 0.8.7")
+  s.add_development_dependency("bundler", ">= 1.0.12")
 
   s.require_path = 'lib'
   s.files = %w(README.md Rakefile) + Dir.glob("lib/**/*")
@@ -198,7 +203,7 @@ rescue Bundler::GemNotFound
     "Did you run `bundle install`?"
 end
 
-require File.expand_path('../spec/environment', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
@@ -250,17 +255,11 @@ end
 ##############################################################
 ## Spec Folder
 puts "Making Specs..."
-File.open("#{gem_name}/spec/environment.rb", 'w') do |f|
-  file_contents=<<ENDFILE
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-ENDFILE
-  f.write(file_contents)
-end
 
 File.open("#{gem_name}/spec/spec_helper.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
-require File.expand_path('../environment', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 unless defined?(SPEC_ROOT)
   SPEC_ROOT = File.join(File.dirname(__FILE__))
