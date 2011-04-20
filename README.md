@@ -15,7 +15,7 @@ What Does it Do?
 
 Nugget produces a directory tree that looks like this (for the gem super_awesome):
 
-![Directory Tree](https://github.com/rubyx/nugget/raw/master/install "Nugget Generated Tree")
+![Directory Tree](https://github.com/rubyx/nugget/raw/master/images/directory_tree.jpg "Nugget Generated Tree")
 
 It does not install any gem requirements in your app to generate gemspecs or "manage"
 your gems.
