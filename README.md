@@ -10,6 +10,17 @@ for a gem file, with a gemspec and a spec suite to start testing.
 
 Where you go from there is up to you :)
 
+What Does it Do?
+----------------
+
+Nugget produces a directory tree that looks like this (for the gem super_awesome):
+
+![Directory Tree](https://github.com/rubyx/nugget/raw/master/install "Nugget Generated Tree")
+
+It does not install any gem requirements in your app to generate gemspecs or "manage"
+your gems.
+
+
 Usage
 ----------------
 
@@ -72,8 +83,8 @@ Once done, use the standard gem tools to deploy:
     $ git tag v0.0.1
     $ git push
     $ git push --tags
-    $ gem build <yourgem>.gemspec
-    $ gem push <yourgem>.gemspec
+    $ rake build          # Creates a gem file for you using the lastest version
+    $ rake release        # Releases your gem to rubygems
 
 And you are done.
 

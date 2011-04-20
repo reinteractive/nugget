@@ -15,14 +15,14 @@ else
   exit(1)
 end
 
-print "\nAs well as your email: "
+print "As well as your email: "
 author_email = gets.chomp
 unless author_email !~ /^\s*$/
   puts "Need the email for rubygem deploy, don't worry, I won't spam you (others might though)..."
   exit(1)
 end
 
-print "\And your name:          "
+print "And your name please:  "
 author_name = gets.chomp
 unless author_name !~ /^\s*$/
   puts "You aren't going to tell me who you are? Sorry to offend you! But I sorta need it for rubygems... "
