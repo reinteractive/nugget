@@ -5,7 +5,7 @@ def camelize(lower_case_and_underscored_word)
   lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
 end
 
-puts "\n\nPlease enter the name of your gem:"
+write "\n\nPlease enter the name of your gem: "
 gem_name = gets.chomp
 
 if gem_name !~ /^\s*$/
@@ -15,15 +15,24 @@ else
   exit(1)
 end
 
-puts "\nPlease enter your name:"
-author_name = gets.chomp
-
-puts "\nPlease enter your email:"
+write "\nAs well as your email: "
 author_email = gets.chomp
+unless author_email !~ /^\s*$/
+  puts "Need the email for rubygem deploy, don't worry, I won't spam you (others might though)..."
+  exit(1)
+end
 
-puts "The git write URL is the git location where you will be storing your gem,"
+write "\And your name:          "
+author_name = gets.chomp
+unless author_name !~ /^\s*$/
+  puts "You aren't going to tell me who you are? Sorry to offend you! But I sorta need it for rubygems... "
+  exit(1)
+end
+
+puts "\n\nThe git write URL is the git location where you will be storing your gem,"
 puts "this needs read and write access, so be sure to enter the right one, for"
-puts "example, git@github.com:rubyx/nugget.git"
+puts "example:"
+puts "          git@github.com:rubyx/nugget.git"
 puts "\nPlease enter the git write URL for your gem:"
 giturl = gets.chomp
 
@@ -31,7 +40,7 @@ giturl =~ /^git@github.com:(\w+\/\w+).git$/
 if $1
   git_path = $1
 else
-  puts "Does not look like a git read and write URL, sorry."
+  puts "Does not look like a git read and write URL, sorry, I'm going to die now."
   exit(1)
 end
 
