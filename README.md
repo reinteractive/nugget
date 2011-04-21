@@ -24,7 +24,14 @@ your gems.
 Usage
 ----------------
 
+You can run it directly from the code on github:
+
     $ ruby -s <(curl -s https://github.com/rubyx/nugget/raw/master/install.rb)
+
+Or you can clone it to your local box and run it:
+
+    $ git clone git://github.com/rubyx/nugget.git
+    $ ruby nugget/install.rb
 
 You will be asked for the following:
 
@@ -90,6 +97,32 @@ Once done, use the standard gem tools to deploy:
     $ rake release        # Releases your gem to rubygems
 
 And you are done.
+
+Todo List
+-----------------
+
+* Turn nugget into an executable gem instead of a simple script to allow:
+
+<pre><code>$ gem install nugget
+$ nugget super_awesome
+<pre><code>
+
+* Add specs to nugget
+* Allow a flag to use test unit instead of rspec
+* Allow a flag to generate a Rails 3 friendly gem
+
+
+How to Contribute
+----------------
+
+As there is no test suite in place yet, feel free to fork and send me pull requests.  Or
+help by writing some tests :)
+
+
+License
+----------------
+
+Nugget is released under the MIT licenses.  See the [LICENSE.txt](https://github.com/rubyx/nugget/raw/master/LICENSES.txt) file.  Copyright 2011 Mikel Lindsaar, RubyX.
 
 
 Enjoy.

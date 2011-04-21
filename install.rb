@@ -164,6 +164,7 @@ Gem::Specification.new do |s|
   s.author      = ["#{author_name}"]
   s.email       = ["#{author_email}"]
   s.homepage    = "http://github.com/#{git_path}"
+  s.license     = 'MIT'
   s.description = ""  # Please fill in a short description
   s.summary     = ""  # Please fill in a longer summary
 
@@ -287,6 +288,37 @@ require 'spec_helper'
 describe #{module_name}::Base do
   it "does something"
 end
+ENDFILE
+  f.write(file_contents)
+end
+
+
+##############################################################
+## Adding License
+puts "Making Specs..."
+
+File.open("#{gem_name}/spec/spec_helper.rb", 'w') do |f|
+  file_contents=<<ENDFILE
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ENDFILE
   f.write(file_contents)
 end
