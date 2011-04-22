@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
-require 'ftools'
+require 'fileutils'
 
 def camelize(lower_case_and_underscored_word)
   lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+end
+
+# RUBY_ENGINE doesn't exist in 1.8
+def ruby_engine
+  defined?(RUBY_ENGINE) ? RUBY_ENGINE : "ruby"
 end
 
 print "\n\nPlease enter the name of your gem: "
@@ -50,9 +55,8 @@ puts "\n\nThank you, building the gem structure now\n"
 ## Directory Structure
 puts "Making directory structure..."
 
-File.makedirs("#{gem_name}/lib/#{gem_name}")
-File.makedirs("#{gem_name}/spec")
-File.makedirs("#{gem_name}/spec/#{gem_name}")
+FileUtils.mkdir_p("#{gem_name}/lib/#{gem_name}")
+FileUtils.mkdir_p("#{gem_name}/spec/#{gem_name}")
 
 ##############################################################
 ## Library Files
@@ -248,7 +252,7 @@ group :test do
   gem "rspec"
   gem "diff-lcs"
   case
-  when defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  when ruby_engine == 'rbx'
     # Skip it
   when RUBY_PLATFORM == 'java'
     # Skip it
@@ -264,9 +268,10 @@ end
 
 ##############################################################
 ## RVM configuration
+
 puts "Making .rvmrc..."
 File.open("#{gem_name}/.rvmrc", 'w') do |f|
-  f.puts "rvm --create use #{RUBY_ENGINE}-#{RUBY_VERSION}@#{gem_name} > /dev/null"
+  f.puts "rvm --create use #{ruby_engine}-#{RUBY_VERSION}-#{RUBY_PATCHLEVEL}@#{gem_name} > /dev/null"
 end
 
 ##############################################################
