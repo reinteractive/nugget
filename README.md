@@ -67,7 +67,7 @@ Tom Preston-Werner for more info.  Once done, do the following:
 <pre><code>$ git add README.md
 $ git commit README.md -m "First commit"
 $ git push origin master
-<code></pre>
+</code></pre>
 
 * Modify the gemspec to update the description and summary info
 * Commit and push the rest of the code:
@@ -105,12 +105,11 @@ Todo List
 
 <pre><code>$ gem install nugget
 $ nugget super_awesome
-<pre><code>
+</code></pre>
 
 * Add specs to nugget
 * Allow a flag to use test unit instead of rspec
 * Allow a flag to generate a Rails 3 friendly gem
-
 
 How to Contribute
 ----------------
@@ -118,11 +117,9 @@ How to Contribute
 As there is no test suite in place yet, feel free to fork and send me pull requests.  Or
 help by writing some tests :)
 
-
 License
 ----------------
 
 Nugget is released under the MIT licenses.  See the [LICENSE.txt](https://github.com/rubyx/nugget/raw/master/LICENSES.txt) file.  Copyright 2011 Mikel Lindsaar, RubyX.
-
 
 Enjoy.
