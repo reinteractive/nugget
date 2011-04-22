@@ -226,7 +226,7 @@ task :build do
 end
 
 task :release => :build do
-  system "gem push #{gem_name}-#{module_name}::VERSION::STRING}"
+  system "gem push #{gem_name}-#{module_name + '::VERSION::STRING'}"
 end
 ENDFILE
   f.write(file_contents)
