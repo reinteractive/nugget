@@ -271,7 +271,7 @@ end
 
 puts "Making .rvmrc..."
 File.open("#{gem_name}/.rvmrc", 'w') do |f|
-  f.puts "rvm --create use #{ruby_engine}-#{RUBY_VERSION}-#{RUBY_PATCHLEVEL}@#{gem_name} > /dev/null"
+  f.puts "rvm --create use #{ruby_engine}-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@#{gem_name} > /dev/null"
 end
 
 ##############################################################
