@@ -5,6 +5,10 @@ def camelize(lower_case_and_underscored_word)
   lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
 end
 
+def append_to_ignore(text)
+  File.open("#{gem_name}/.gitignore", 'a') { |f| f.puts(text) }
+end
+
 print "\n\nPlease enter the name of your gem: "
 gem_name = gets.chomp
 
@@ -267,6 +271,19 @@ end
 puts "Making .rvmrc..."
 File.open("#{gem_name}/.rvmrc", 'w') do |f|
   f.puts "rvm --create use #{RUBY_ENGINE}-#{RUBY_VERSION}@#{gem_name} > /dev/null"
+end
+
+##############################################################
+## Git configuration
+puts "Making .gitconfig..."
+File.open("#{gem_name}/.gitconfig", 'w') do |f|
+  file_contents=<<ENDFILE
+[user]
+  email = #{author_email}
+  name = #{author_name}
+ENDFILE
+  f.write(file_contents)
+  append_to_ignore('.gitconfig')
 end
 
 ##############################################################
