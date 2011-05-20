@@ -7,9 +7,10 @@ end
 
 print "\n\nPlease enter the name of your gem: "
 gem_name = gets.chomp
+directory_name = gem_name.downcase.gsub(" ", "_")
 
 if gem_name !~ /^\s*$/
-  module_name = camelize(gem_name)
+  module_name = camelize(gem_name).gsub(" ", "::")
 else
   puts "I need a gem name that is not blank... c'mon..."
   exit(1)
@@ -50,15 +51,15 @@ puts "\n\nThank you, building the gem structure now\n"
 ## Directory Structure
 puts "Making directory structure..."
 
-File.makedirs("#{gem_name}/lib/#{gem_name}")
-File.makedirs("#{gem_name}/spec")
-File.makedirs("#{gem_name}/spec/#{gem_name}")
+File.makedirs("#{directory_name}/lib/#{directory_name}")
+File.makedirs("#{directory_name}/spec")
+File.makedirs("#{directory_name}/spec/#{directory_name}")
 
 ##############################################################
 ## Library Files
 puts "Making top level library files..."
 
-File.open("#{gem_name}/README.md", 'w') do |f|
+File.open("#{directory_name}/README.md", 'w') do |f|
   file_contents=<<ENDFILE
 #{gem_name} readme
 =========================
@@ -73,7 +74,7 @@ ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/CHANGELOG", 'w') do |f|
+File.open("#{directory_name}/CHANGELOG", 'w') do |f|
   file_contents=<<ENDFILE
 == #{Time.now.to_s} #{author_name} <#{author_email}>
 
@@ -82,18 +83,18 @@ ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/lib/#{gem_name}.rb", 'w') do |f|
+File.open("#{directory_name}/lib/#{directory_name}.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
 module #{module_name}
-  require '#{gem_name}/version'
-  require '#{gem_name}/base'
+  require '#{directory_name}/version'
+  require '#{directory_name}/base'
 end
 ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/lib/#{gem_name}/base.rb", 'w') do |f|
+File.open("#{directory_name}/lib/#{directory_name}/base.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
 module #{module_name}
@@ -109,7 +110,7 @@ end
 ## Version Files
 puts "Making version files..."
 
-File.open("#{gem_name}/lib/VERSION", 'w') do |f|
+File.open("#{directory_name}/lib/VERSION", 'w') do |f|
   file_contents=<<ENDFILE
 major:0
 minor:0
@@ -119,7 +120,7 @@ ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/lib/#{gem_name}/version.rb", 'w') do |f|
+File.open("#{directory_name}/lib/#{directory_name}/version.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
 module #{module_name}
@@ -152,11 +153,11 @@ end
 
 ##############################################################
 ## Gemspec File
-puts "Making #{gem_name}gemspec..."
+puts "Making #{directory_name}gemspec..."
 
-File.open("#{gem_name}/#{gem_name}.gemspec", 'w') do |f|
+File.open("#{directory_name}/#{directory_name}.gemspec", 'w') do |f|
   file_contents=<<ENDFILE
-require File.dirname(__FILE__) + "/lib/#{gem_name}/version"
+require File.dirname(__FILE__) + "/lib/#{directory_name}/version"
 
 Gem::Specification.new do |s|
   s.name        = "mail"
@@ -190,7 +191,7 @@ end
 ## RakeFile
 puts "Making Rakefile..."
 
-File.open("#{gem_name}/Rakefile", 'w') do |f|
+File.open("#{directory_name}/Rakefile", 'w') do |f|
   file_contents=<<ENDFILE
 begin
   require "rubygems"
@@ -219,23 +220,36 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
-require "#{gem_name}/version"
+require "#{directory_name}/version"
 
 task :build do
-  system "gem build #{gem_name}.gemspec"
+  system "gem build #{directory_name}.gemspec"
 end
 
 task :release => :build do
-  system "gem push #{gem_name}-#{module_name + '::VERSION::STRING'}"
+  system "gem push #{directory_name}-\#{#{module_name}::VERSION::STRING}"
 end
 ENDFILE
   f.write(file_contents)
 end
 
+case
+when defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  @ruby_type = 'rbx'
+when RUBY_PLATFORM == 'java'
+  @ruby_type = 'jruby'
+when RUBY_VERSION < '1.9'
+  @ruby_type = 'ruby'
+else
+  # Skip it
+end
+
+
+
 ##############################################################
 ## Gemfile
 puts "Making Gemfile..."
-File.open("#{gem_name}/Gemfile", 'w') do |f|
+File.open("#{directory_name}/Gemfile", 'w') do |f|
   file_contents=<<ENDFILE
 source :rubygems
 
@@ -265,15 +279,15 @@ end
 ##############################################################
 ## RVM configuration
 puts "Making .rvmrc..."
-File.open("#{gem_name}/.rvmrc", 'w') do |f|
-  f.puts "rvm --create use #{RUBY_ENGINE}-#{RUBY_VERSION}@#{gem_name} > /dev/null"
+File.open("#{directory_name}/.rvmrc", 'w') do |f|
+  f.puts "rvm use #{@ruby_type}-#{RUBY_VERSION}"
 end
 
 ##############################################################
 ## Spec Folder
 puts "Making Specs..."
 
-File.open("#{gem_name}/spec/spec_helper.rb", 'w') do |f|
+File.open("#{directory_name}/spec/spec_helper.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
@@ -282,12 +296,12 @@ unless defined?(SPEC_ROOT)
   SPEC_ROOT = File.join(File.dirname(__FILE__))
 end
 
-require '#{gem_name}'
+require '#{directory_name}'
 ENDFILE
   f.write(file_contents)
 end
 
-File.open("#{gem_name}/spec/#{gem_name}/base_spec.rb", 'w') do |f|
+File.open("#{directory_name}/spec/#{directory_name}/base_spec.rb", 'w') do |f|
   file_contents=<<ENDFILE
 # encoding: utf-8
 require 'spec_helper'
@@ -304,7 +318,7 @@ end
 ## Adding License
 puts "Making Specs..."
 
-File.open("#{gem_name}/spec/spec_helper.rb", 'w') do |f|
+File.open("#{directory_name}/LICENSE", 'w') do |f|
   file_contents=<<ENDFILE
 MIT License
 
@@ -334,13 +348,13 @@ end
 ##############################################################
 ## Adding Git Remote
 puts "Adding your git repository as origin..."
-`cd #{gem_name} && git init`
-`cd #{gem_name} && git remote add origin #{giturl}`
+`cd #{directory_name} && git init`
+`cd #{directory_name} && git remote add origin #{giturl}`
 
 ##############################################################
 ## Wrapping up
 puts "\n\nCreation of gem #{gem_name} is complete"
-puts "\nPlease change into your gem directory, edit the README.md and run:"
+puts "\nPlease change into your gem directory in #{directory_name}, edit the README.md and run:"
 
 puts "$ git add README.md"
 puts '$ git commit README.md -m "First commit'
