@@ -26,7 +26,7 @@ Usage
 
 You can run it directly from the code on github:
 
-    $ ruby -s <(curl -s https://github.com/rubyx/nugget/raw/master/install.rb)
+    $ ruby -s <(curl -s https://raw.github.com/rubyx/nugget/master/install.rb)
 
 Or you can clone it to your local box and run it:
 
