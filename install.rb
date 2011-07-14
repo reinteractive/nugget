@@ -6,7 +6,7 @@ def camelize(lower_case_and_underscored_word)
 end
 
 def append_to_ignore(text)
-  File.open("#{gem_name}/.gitignore", 'a') { |f| f.puts(text) }
+  File.open("#{@gem_name}/.gitignore", 'a') { |f| f.puts(text) }
 end
 
 # RUBY_ENGINE doesn't exist in 1.8
@@ -15,11 +15,11 @@ def ruby_engine
 end
 
 print "\n\nPlease enter the name of your gem: "
-gem_name = gets.chomp
-directory_name = gem_name.downcase.gsub(" ", "_")
+@gem_name = gets.chomp
+directory_name = @gem_name.downcase.gsub(" ", "_")
 
-if gem_name !~ /^\s*$/
-  module_name = camelize(gem_name).gsub(" ", "::")
+if @gem_name !~ /^\s*$/
+  module_name = camelize(@gem_name).gsub(" ", "::")
 else
   puts "I need a gem name that is not blank... c'mon..."
   exit(1)
@@ -60,8 +60,8 @@ puts "\n\nThank you, building the gem structure now\n"
 ## Directory Structure
 puts "Making directory structure..."
 
-FileUtils.mkdir_p("#{gem_name}/lib/#{gem_name}")
-FileUtils.mkdir_p("#{gem_name}/spec/#{gem_name}")
+FileUtils.mkdir_p("#{@gem_name}/lib/#{@gem_name}")
+FileUtils.mkdir_p("#{@gem_name}/spec/#{@gem_name}")
 
 ##############################################################
 ## Library Files
@@ -69,7 +69,7 @@ puts "Making top level library files..."
 
 File.open("#{directory_name}/README.md", 'w') do |f|
   file_contents=<<ENDFILE
-#{gem_name} readme
+#{@gem_name} readme
 =========================
 
 Decription
@@ -86,7 +86,7 @@ File.open("#{directory_name}/CHANGELOG", 'w') do |f|
   file_contents=<<ENDFILE
 == #{Time.now.to_s} #{author_name} <#{author_email}>
 
-* Created #{gem_name}
+* Created #{@gem_name}
 ENDFILE
   f.write(file_contents)
 end
@@ -288,14 +288,14 @@ end
 ## RVM configuration
 
 puts "Making .rvmrc..."
-File.open("#{gem_name}/.rvmrc", 'w') do |f|
-  f.puts "rvm --create use #{ruby_engine}-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@#{gem_name} > /dev/null"
+File.open("#{@gem_name}/.rvmrc", 'w') do |f|
+  f.puts "rvm --create use #{ruby_engine}-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@#{@gem_name} > /dev/null"
 end
 
 ##############################################################
 ## Git configuration
 puts "Making .gitconfig..."
-File.open("#{gem_name}/.gitconfig", 'w') do |f|
+File.open("#{@gem_name}/.gitconfig", 'w') do |f|
   file_contents=<<ENDFILE
 [user]
   email = #{author_email}
@@ -375,7 +375,7 @@ puts "Adding your git repository as origin..."
 
 ##############################################################
 ## Wrapping up
-puts "\n\nCreation of gem #{gem_name} is complete"
+puts "\n\nCreation of gem #{@gem_name} is complete"
 puts "\nPlease change into your gem directory in #{directory_name}, edit the README.md and run:"
 
 puts "$ git add README.md"
