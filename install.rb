@@ -42,7 +42,7 @@ end
 puts "\n\nThe git write URL is the git location where you will be storing your gem,"
 puts "this needs read and write access, so be sure to enter the right one, for"
 puts "example:"
-puts "          git@github.com:rubyx/nugget.git"
+puts "          git@github.com:reInteractive/nugget.git"
 puts "\nPlease enter the git write URL for your gem:"
 giturl = gets.chomp
 

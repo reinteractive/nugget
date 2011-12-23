@@ -15,7 +15,7 @@ What Does it Do?
 
 Nugget produces a directory tree that looks like this (for the gem super_awesome):
 
-![Directory Tree](https://github.com/rubyx/nugget/raw/master/images/directory_tree.jpg "Nugget Generated Tree")
+![Directory Tree](https://github.com/reInteractive/nugget/raw/master/images/directory_tree.jpg "Nugget Generated Tree")
 
 It does not install any gem requirements in your app to generate gemspecs or "manage"
 your gems.
@@ -26,11 +26,11 @@ Usage
 
 You can run it directly from the code on github:
 
-    $ ruby -s <(curl -s https://raw.github.com/rubyx/nugget/master/install.rb)
+    $ ruby -s <(curl -s https://raw.github.com/reInteractive/nugget/master/install.rb)
 
 Or you can clone it to your local box and run it:
 
-    $ git clone git://github.com/rubyx/nugget.git
+    $ git clone git://github.com/reInteractive/nugget.git
     $ ruby nugget/install.rb
 
 You will be asked for the following:
@@ -120,6 +120,6 @@ help by writing some tests :)
 License
 ----------------
 
-Nugget is released under the MIT licenses.  See the [LICENSE.txt](https://github.com/rubyx/nugget/raw/master/LICENSES.txt) file.  Copyright 2011 Mikel Lindsaar, RubyX.
+Nugget is released under the MIT licenses.  See the [LICENSE.txt](https://github.com/reInteractive/nugget/raw/master/LICENSES.txt) file.  Copyright 2011 Mikel Lindsaar, RubyX.
 
 Enjoy.
