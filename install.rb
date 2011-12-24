@@ -168,7 +168,7 @@ File.open("#{directory_name}/#{directory_name}.gemspec", 'w') do |f|
 require File.dirname(__FILE__) + "/lib/#{directory_name}/version"
 
 Gem::Specification.new do |s|
-  s.name        = "mail"
+  s.name        = "#{module_name}"
   s.version     = #{module_name}::VERSION::STRING
   s.author      = ["#{author_name}"]
   s.email       = ["#{author_email}"]
